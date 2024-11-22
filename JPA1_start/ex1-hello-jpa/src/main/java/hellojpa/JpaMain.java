@@ -78,30 +78,48 @@ public class JpaMain {
 //            Team findTeam = em.find(Team.class, team.getId());
 
             /* 객체 지향 모델링 */
-            // 팀 저장
+//            // 팀 저장
+//            Team team = new Team();
+//            team.setName("TeamA");
+//            em.persist(team);
+//
+//            // 회원 저장
+//            Member member = new Member();
+//            member.setName("member1");
+//            member.setTeam(team); //단방향 연관관계 설정, 참조 저장
+//            em.persist(member);
+//
+//            // 조회
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            //참조를 사용해서 연관관계 조회
+//            Team findTeam = findMember.getTeam();
+//
+//            // 새로운 팀B
+//            Team teamB = new Team();
+//            teamB.setName("TeamB");
+//            em.persist(teamB);
+//
+//            // 회원1에 새로운 팀B 설정
+//            member.setTeam(teamB);
+
+            /* 양방향 매핑 */
+            // 저장
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
-            // 회원 저장
             Member member = new Member();
             member.setName("member1");
-            member.setTeam(team); //단방향 연관관계 설정, 참조 저장
+            member.setTeam(team);
             em.persist(member);
 
-            // 조회
             Member findMember = em.find(Member.class, member.getId());
+            List<Member> members = findMember.getTeam().getMembers();
 
-            //참조를 사용해서 연관관계 조회
-            Team findTeam = findMember.getTeam();
-
-            // 새로운 팀B
-            Team teamB = new Team();
-            teamB.setName("TeamB");
-            em.persist(teamB);
-
-            // 회원1에 새로운 팀B 설정
-            member.setTeam(teamB);
+            for (Member m : members) {
+                System.out.println("m = "+m.getName());
+            }
 
             tx.commit();
         }catch (Exception e){
