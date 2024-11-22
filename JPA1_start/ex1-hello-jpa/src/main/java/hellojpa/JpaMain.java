@@ -59,10 +59,24 @@ public class JpaMain {
 //
 //            System.out.println("===================");
 
-            Member member = new Member();
-            member.setUsername("C");
+            /* 객체를 테이블에 맞춰 모델링 */
+            //팀 저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
+            //회원 저장
+            Member member = new Member();
+            member.setName("member1");
+            member.setTeamId(team.getId());
             em.persist(member);
+
+            // 조회
+            Member findMember = em.find(Member.class, member.getId());
+
+            //연관관계가 없음
+            Team findTeam = em.find(Team.class, team.getId());
+
 
             tx.commit();
         }catch (Exception e){
