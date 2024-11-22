@@ -111,8 +111,8 @@ public class JpaMain {
 
             Member member = new Member();
             member.setName("member1");
-            member.setTeam(team);
-            em.persist(member);
+
+            team.addMember(member);
 
             Member findMember = em.find(Member.class, member.getId());
             List<Member> members = findMember.getTeam().getMembers();
