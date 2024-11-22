@@ -52,12 +52,12 @@ public class JpaMain {
 //            em.flush(); // 직접 호출
 
             // 준영속 상태
-            Member member = em.find(Member.class, 150L);
-            member.setName("AAAAA");
-
-            em.detach(member);
-
-            System.out.println("===================");
+//            Member member = em.find(Member.class, 150L);
+//            member.setName("AAAAA");
+//
+//            em.detach(member);
+//
+//            System.out.println("===================");
 
             tx.commit();
         }catch (Exception e){
