@@ -158,25 +158,35 @@ public class JpaMain {
 //            System.out.println("findMember.getId() = " + findMember.getId());
 //            System.out.println("findMember.getName() = " + findMember.getName());
 
-            Team team = new Team();
-            team.setName("team1");
-            em.persist(team);
+            /** 즉시로딩 & 지연로딩 */
+//            Team team = new Team();
+//            team.setName("team1");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setName("member1");
+//            member.setTeam(team);
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member m = em.find(Member.class, member.getId());
+//
+//            System.out.println("m.getClass() = " + m.getTeam().getClass());
+//
+//            System.out.println("=====================");
+//            m.getTeam().getName();
+//            System.out.println("=====================");
 
-            Member member = new Member();
-            member.setName("member1");
-            member.setTeam(team);
-            em.persist(member);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            em.flush();
-            em.clear();
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            Member m = em.find(Member.class, member.getId());
-
-            System.out.println("m.getClass() = " + m.getTeam().getClass());
-
-            System.out.println("=====================");
-            m.getTeam().getName();
-            System.out.println("=====================");
+            em.persist(parent);
 
             tx.commit();
         }catch (Exception e){
