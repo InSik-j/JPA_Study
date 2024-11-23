@@ -179,22 +179,31 @@ public class JpaMain {
 //            m.getTeam().getName();
 //            System.out.println("=====================");
 
-            Child child1 = new Child();
-            Child child2 = new Child();
+            /** 영속성 전이 (CASCADE) & 고아 객체*/
+//            Child child1 = new Child();
+//            Child child2 = new Child();
+//
+//            Parent parent = new Parent();
+//            parent.addChild(child1);
+//            parent.addChild(child2);
+//
+//            em.persist(parent);
+//            em.persist(child1);
+//            em.persist(child2);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Parent findParent = em.find(Parent.class, parent.getId());
+//            em.remove(findParent);
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
+            /** 임베디드 타입 */
+            Member member = new Member();
+            member.setName("user1");
+            member.setHomeAddress(new Address("city","street", "zipcode"));
+            member.setWorkPeriod(new Period());
+            em.persist(member);
 
-            em.persist(parent);
-            em.persist(child1);
-            em.persist(child2);
-
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
-            em.remove(findParent);
 
             tx.commit();
         }catch (Exception e){
@@ -214,7 +223,7 @@ public class JpaMain {
         String username = member.getName();
         System.out.println("username = " + username);
 
-        Team team = member.getTeam();
-        System.out.println("team = " + team);
+//        Team team = member.getTeam();
+//        System.out.println("team = " + team);
     }
 }
