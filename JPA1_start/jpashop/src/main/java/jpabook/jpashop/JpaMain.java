@@ -22,7 +22,7 @@ public class JpaMain {
             //order.addOrderItem(new OrderItem());
 
             OrderItem orderItem = new OrderItem();
-            orderItem.setOder(order);
+            orderItem.setOrder(order);
 
             em.persist(orderItem);
 

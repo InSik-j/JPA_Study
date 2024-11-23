@@ -32,6 +32,10 @@ public class Order {
         orderItem.setOrder(this);
     }
 
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
+
     /** getter & setter */
     public Long getId() {
         return id;
