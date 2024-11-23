@@ -2,9 +2,6 @@ package hellojpa;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 public class JpaMain {
 
     public static void main(String[] args) {
@@ -135,16 +132,31 @@ public class JpaMain {
 //
 //            Movie findMovie = em.find(Movie.class, movie.getId());
 //            System.out.println("findMovie = " + findMovie);
+            /** Mapped Superclass */
+//            Member member = new Member();
+//            member.setName("user1");
+//            member.setCreateBy("kim");
+//            member.setCreatedDate(LocalDateTime.now());
+//
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
 
+            /** 프록시 */
             Member member = new Member();
-            member.setName("user1");
-            member.setCreateBy("kim");
-            member.setCreatedDate(LocalDateTime.now());
+            member.setName("userA");
 
             em.persist(member);
 
             em.flush();
             em.clear();
+
+            //Member findMember = em.find(Member.class, member.getId());
+            Member findMember = em.getReference(Member.class, member.getId());
+            System.out.println("findMember = " + findMember.getClass());
+            System.out.println("findMember.getId() = " + findMember.getId());
+            System.out.println("findMember.getName() = " + findMember.getName());
 
 
             tx.commit();
@@ -155,5 +167,17 @@ public class JpaMain {
         }
         
         emf.close();
+    }
+
+    private static void printMember(Member member) {
+        System.out.println("username = " + member.getName());
+    }
+
+    private static void printMemberAndTeam(Member member) {
+        String username = member.getName();
+        System.out.println("username = " + username);
+
+        Team team = member.getTeam();
+        System.out.println("team = " + team);
     }
 }
