@@ -144,20 +144,39 @@ public class JpaMain {
 //            em.clear();
 
             /** 프록시 */
-            Member member = new Member();
-            member.setName("userA");
+//            Member member = new Member();
+//            member.setName("userA");
+//
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            //Member findMember = em.find(Member.class, member.getId());
+//            Member findMember = em.getReference(Member.class, member.getId());
+//            System.out.println("findMember = " + findMember.getClass());
+//            System.out.println("findMember.getId() = " + findMember.getId());
+//            System.out.println("findMember.getName() = " + findMember.getName());
 
+            Team team = new Team();
+            team.setName("team1");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setName("member1");
+            member.setTeam(team);
             em.persist(member);
 
             em.flush();
             em.clear();
 
-            //Member findMember = em.find(Member.class, member.getId());
-            Member findMember = em.getReference(Member.class, member.getId());
-            System.out.println("findMember = " + findMember.getClass());
-            System.out.println("findMember.getId() = " + findMember.getId());
-            System.out.println("findMember.getName() = " + findMember.getName());
+            Member m = em.find(Member.class, member.getId());
 
+            System.out.println("m.getClass() = " + m.getTeam().getClass());
+
+            System.out.println("=====================");
+            m.getTeam().getName();
+            System.out.println("=====================");
 
             tx.commit();
         }catch (Exception e){
