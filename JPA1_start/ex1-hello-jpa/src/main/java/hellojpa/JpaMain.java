@@ -104,22 +104,36 @@ public class JpaMain {
 //            member.setTeam(teamB);
 
             /* 양방향 매핑 */
-            // 저장
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
+//            // 저장
+//            Team team = new Team();
+//            team.setName("TeamA");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setName("member1");
+//
+//            team.addMember(member);
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//            List<Member> members = findMember.getTeam().getMembers();
+//
+//            for (Member m : members) {
+//                System.out.println("m = "+m.getName());
+//            }
 
-            Member member = new Member();
-            member.setName("member1");
+            Movie movie = new Movie();
+            movie.setDirector("AA");
+            movie.setActor("BB");
+            movie.setName("바람과 함께 사라지다");
+            movie.setPrice(10000);
 
-            team.addMember(member);
+            em.persist(movie);
 
-            Member findMember = em.find(Member.class, member.getId());
-            List<Member> members = findMember.getTeam().getMembers();
+            em.flush();
+            em.clear();
 
-            for (Member m : members) {
-                System.out.println("m = "+m.getName());
-            }
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println("findMovie = " + findMovie);
 
             tx.commit();
         }catch (Exception e){
