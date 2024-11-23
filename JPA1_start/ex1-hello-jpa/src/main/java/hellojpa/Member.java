@@ -26,13 +26,13 @@ public class Member {
     private Address homeAddress;
 
     // 주소 Address
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column(name = "WORK_CITY")),
-            @AttributeOverride(name = "street", column = @Column(name = "WORK_STREET")),
-            @AttributeOverride(name = "zipCode", column = @Column(name = "WORK_ZIPCODE"))
-    })
-    private Address workAddress;
+//    @Embedded
+//    @AttributeOverrides({
+//            @AttributeOverride(name="city", column = @Column(name = "WORK_CITY")),
+//            @AttributeOverride(name="street", column = @Column(name = "WORK_STREET")),
+//            @AttributeOverride(name="zipCode", column = @Column(name = "WORK_ZIPCODE"))
+//    })
+//    private Address workAddress;
 
 
 //    @Column(name = "TEAM_ID")

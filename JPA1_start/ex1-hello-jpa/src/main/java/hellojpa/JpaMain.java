@@ -198,12 +198,22 @@ public class JpaMain {
 //            em.remove(findParent);
 
             /** 임베디드 타입 */
-            Member member = new Member();
-            member.setName("user1");
-            member.setHomeAddress(new Address("city","street", "zipcode"));
-            member.setWorkPeriod(new Period());
-            em.persist(member);
+//            Member member = new Member();
+//            member.setName("user1");
+//            member.setHomeAddress(new Address("city","street", "zipcode"));
+//            member.setWorkPeriod(new Period());
+//            em.persist(member);
 
+            /** 값 타입과 불변 객체 */
+            Address address = new Address("city","street", "zipcode");
+
+            Member member1 = new Member();
+            member1.setName("user1");
+            member1.setHomeAddress(address);
+            em.persist(member1);
+
+            Address newAddress = new Address("city1","street1", "zipcode1");
+            member1.setHomeAddress(newAddress);
 
             tx.commit();
         }catch (Exception e){
