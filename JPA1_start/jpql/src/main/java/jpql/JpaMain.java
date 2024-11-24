@@ -18,10 +18,9 @@ public class JpaMain {
             member.setUsername("user1");
             em.persist(member);
 
-            TypedQuery<Member> query1 = em.createQuery("select m from Member m", Member.class);
+            List<Member> result = em.createQuery("select m from Member m", Member.class).getResultList();
 
-            TypedQuery<String> query2 = em.createQuery("select m.username from Member m", String.class);
-            Query query3 = em.createQuery("select m.username, m.age from Member m");
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
