@@ -14,37 +14,51 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
+            Team team1 = new Team();
+            team1.setName("teamA");
+            em.persist(team1);
 
-            Member member = new Member();
-            member.setUsername("user1");
-            member.setAge(10);
+            Team team2 = new Team();
+            team2.setName("teamB");
+            em.persist(team2);
 
-            member.setTeam(team);
+            Member member1 = new Member();
+            member1.setUsername("user1");
+            member1.setTeam(team1);
+            em.persist(member1);
 
-            em.persist(member);
+            Member member2 = new Member();
+            member2.setUsername("user2");
+            member2.setTeam(team1);
+            em.persist(member2);
+
+            Member member3 = new Member();
+            member3.setUsername("user3");
+            member3.setTeam(team2);
+            em.persist(member3);
 
             em.flush();
             em.clear();
 
-            // 기본 case 식
-            String query1 = "select case when m.age <= 10 then '학생요금' when m.age <= 60 then '경로요금' else '일반요금' end from Member m";
-
-            // 조건식 - case 식
-                // COALESCE: 하나씩 조회해서 null이 아니면 반환
-            String query2 = "select coalesce(m.username,'이름 없는 회원') from Member m";
-
-                // NULLIF: 두 값이 같으면 null 반환, 다르면 첫번째 값 반환
-            String query3 = "select NULLIF(m.username, '관리자') from Member m";
+            String query1 = "select m from Member m join fetch m.team";
 
             List<Member> result = em.createQuery(query1, Member.class)
                     .getResultList();
 
-            System.out.println("result.size() = " + result.size());
-            for (Member member1 : result) {
-                System.out.println("member1 = " + member1);
+            for (Member member : result) {
+                System.out.println("member = " + member.getUsername()+", "+ member.getTeam().getName());
+            }
+
+            String query2 = "select distinct t from Team t join fetch t.members";
+
+            List<Team> result2 = em.createQuery(query2, Team.class)
+                    .getResultList();
+
+            for (Team team : result2) {
+                System.out.println("team = " + team.getName()+", "+ team.getMembers().size());
+                for( Member member : team.getMembers()){
+                    System.out.println("member = " + member);
+                }
             }
 
 
