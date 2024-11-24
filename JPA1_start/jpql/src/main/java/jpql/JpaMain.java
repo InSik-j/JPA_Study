@@ -1,8 +1,6 @@
-package jqpl;
+package jpql;
 
 import jakarta.persistence.*;
-
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -18,7 +16,7 @@ public class JpaMain {
             member.setUsername("user1");
             em.persist(member);
 
-            List<Member> result = em.createQuery("select m from Member m", Member.class).getResultList();
+            em.createQuery("select new jpql.MemberDTO(m.username, m.age) from Member m", MemberDTO.class).getResultList();
 
 
             tx.commit();
