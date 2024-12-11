@@ -41,7 +41,7 @@ public class OrderSimpleApiController {
         return all;
     }
 
-    /** V2_ 엔티티를 조회해서 DTO로 변환( fetch join 사용X ) */
+    /** V2_ 엔티티를 조회해서 DTO로 변환( fetch join 사용 X ) */
     @GetMapping("/api/v2/simple-orders")
     public List<SimpleOrderDto> ordersV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
@@ -49,6 +49,17 @@ public class OrderSimpleApiController {
         List<SimpleOrderDto> result = orders.stream()
                                             .map(o -> new SimpleOrderDto(o))
                                             .collect(Collectors.toList());
+
+        return result;
+    }
+
+    /** V3_ 엔티티를 조회해서 DTO로 변환( fetch join 사용 O ) */
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3(){
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+        List<SimpleOrderDto> result = orders.stream()
+                .map(o -> new SimpleOrderDto(o))
+                .collect(Collectors.toList());
 
         return result;
     }
