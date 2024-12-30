@@ -664,4 +664,33 @@ public class QuerydslBasicTest {
     private BooleanExpression allEq(String usernameCond, Integer ageCond) {
         return usernameEq(usernameCond).and(ageEq(ageCond));
     }
+
+    /** 수정, 삭제 벌크 연산 */
+    @Test
+    public void bulkUpdate() {
+        // 대량 데이터 수정
+        long count = queryFactory
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(28))
+                .execute();
+        em.flush();
+        em.clear();
+
+        // 기존 숫자에 더하기
+        long count2 = queryFactory
+                .update(member)
+                .set(member.age, member.age.add(1))
+                .execute();
+        em.flush();
+        em.clear();
+
+        // 대량 데이터 삭제
+        long count3 = queryFactory
+                .delete(member)
+                .where(member.age.gt(18))
+                .execute();
+        em.flush();
+        em.clear();
+    }
 }
